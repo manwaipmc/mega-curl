@@ -2,8 +2,6 @@
 /**
  * Created by Slava Basko.
  * Email: basko.slava@gmail.com
- * Date: 08/02/13
- * Time: 6:43 PM
  */
 
 namespace MegaCurl;
@@ -13,23 +11,65 @@ class MegaCurl {
 
     const CONNECTION_AUTO_CLOSE = 1;
 
+    const CONNECTION_LIVE = 2;
+
+    /**
+     * Response
+     *
+     * @var
+     */
     public $response;
 
+    /**
+     * File for cookies
+     *
+     * @var
+     */
     private $cookie_file;
 
+    /**
+     * cURL resource
+     *
+     * @var null
+     */
     private $ch = null;
 
+    /**
+     * Options
+     *
+     * @var array
+     */
     private $options = array();
 
+    /**
+     * Headers
+     *
+     * @var array
+     */
     private $headers = array();
 
+    /**
+     * Error code
+     *
+     * @var
+     */
     public $errCode;
 
+    /**
+     * Error message
+     *
+     * @var
+     */
     public $errString;
 
+    /**
+     * @var
+     */
     public $info;
 
     /**
+     * Constructor
+     *
      * @param null $url
      */
     public function __construct($url = null)
@@ -41,6 +81,8 @@ class MegaCurl {
     }
 
     /**
+     * Set URL
+     *
      * @param $url
      * @return $this
      * @throws \Exception
@@ -55,6 +97,8 @@ class MegaCurl {
     }
 
     /**
+     * Create cookie file
+     *
      * @param $cookieFile
      * @return bool
      */
@@ -84,7 +128,7 @@ class MegaCurl {
         if(!file_exists($this->cookie_file)) {
             $this->createCookieFile($this->cookie_file);
         }
-        $this->SetOptions(array(
+        $this->setOptions(array(
                 'COOKIEFILE' => $this->cookie_file,
                 'COOKIEJAR' => $this->cookie_file,
                 'USERAGENT' => $_SERVER['HTTP_USER_AGENT']
@@ -106,6 +150,8 @@ class MegaCurl {
     }
 
     /**
+     * Set HTTP method
+     *
      * @param $method
      * @return $this
      * @throws \Exception
@@ -120,6 +166,8 @@ class MegaCurl {
     }
 
     /**
+     * Set options
+     *
      * @param array $options
      * @return $this
      */
@@ -136,6 +184,8 @@ class MegaCurl {
     }
 
     /**
+     * Set HTTP header
+     *
      * @param $header
      * @param null $content
      * @return $this
@@ -147,8 +197,11 @@ class MegaCurl {
     }
 
     /**
+     * Execute request
+     *
      * @param int $autoClose
      * @return bool|mixed
+     * @throws \Exception
      */
     public function execute($autoClose = self::CONNECTION_AUTO_CLOSE)
     {
@@ -175,15 +228,21 @@ class MegaCurl {
         // successful
         else {
             $this->info = curl_getinfo($this->ch);
-            if ($autoClose === self::CONNECTION_AUTO_CLOSE) {
+            if ($autoClose === static::CONNECTION_AUTO_CLOSE) {
                 $this->close();
+                $this->resetAllParams();
+            } elseif ($autoClose != static::CONNECTION_LIVE) {
+                $this->close();
+                $this->resetAllParams();
+                throw new \Exception('Invalid connection param');
             }
-            $this->resetAllParams();
             return $this->response;
         }
     }
 
     /**
+     * Execute POST request
+     *
      * @param array $data
      * @return bool|mixed
      */
@@ -197,6 +256,8 @@ class MegaCurl {
     }
 
     /**
+     * Close connection
+     *
      * @return bool
      */
     public function close() {
@@ -206,8 +267,10 @@ class MegaCurl {
     }
 
     /**
-    * @return bool
-    */
+     * Reset params
+     *
+     * @return bool
+     */
     public function resetAllParams() {
         $this->info = array();
         $this->options = array();
@@ -217,4 +280,4 @@ class MegaCurl {
         return true;
     }
 
-} 
+}
