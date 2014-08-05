@@ -53,19 +53,19 @@ class MegaCurl {
      *
      * @var
      */
-    public $errCode;
+    private $errCode;
 
     /**
      * Error message
      *
      * @var
      */
-    public $errString;
+    private $errString;
 
     /**
      * @var
      */
-    public $info;
+    private $info;
 
     /**
      * Constructor
@@ -278,6 +278,36 @@ class MegaCurl {
         $this->errCode = 0;
         $this->errString = '';
         return true;
+    }
+
+    /**
+     * Return error code
+     *
+     * @return mixed
+     */
+    public function getErrorCode()
+    {
+        return $this->errCode;
+    }
+
+    /**
+     * Return error message
+     *
+     * @return mixed
+     */
+    public function getErrorMessage()
+    {
+        return $this->errString;
+    }
+
+    /**
+     * Return request info
+     *
+     * @return mixed
+     */
+    public function getInfo()
+    {
+        return $this->info;
     }
 
 }
