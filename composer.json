@@ -1,0 +1,19 @@
+{
+    "name": "slava-basko/mega-curl",
+    "type": "library",
+    "description": "This class allows you work easy with PHP CURL",
+    "keywords": ["cURL", "request"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Slava Basko",
+            "email": "basko.slava@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": { "MegaCurl\\": "/" }
+    }
+}

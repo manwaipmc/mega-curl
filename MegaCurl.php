@@ -39,14 +39,14 @@ class MegaCurl {
      *
      * @var array
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * Headers
      *
      * @var array
      */
-    private $headers = array();
+    private $headers = [];
 
     /**
      * Error code
@@ -128,11 +128,11 @@ class MegaCurl {
         if(!file_exists($this->cookie_file)) {
             $this->createCookieFile($this->cookie_file);
         }
-        $this->setOptions(array(
+        $this->setOptions([
                 'COOKIEFILE' => $this->cookie_file,
                 'COOKIEJAR' => $this->cookie_file,
                 'USERAGENT' => $_SERVER['HTTP_USER_AGENT']
-            ));
+            ]);
         return $this;
     }
 
@@ -157,7 +157,7 @@ class MegaCurl {
      * @throws \Exception
      */
     public function setHttpMethod($method) {
-        if(!in_array($method, array('post', 'get', 'put', 'delete', 'head', 'options', 'connect'))) {
+        if(!in_array($method, ['post', 'get', 'put', 'delete', 'head', 'options', 'connect'])) {
             $this->close();
             throw new \Exception('Are you kidding me? The are no HTTP method like - \''.$method.'\'');
         }
@@ -247,10 +247,10 @@ class MegaCurl {
      * @return bool|mixed
      */
     public function executePost(array $data) {
-        $this->setOptions(array(
+        $this->setOptions([
                 'POST' => true,
                 'POSTFIELDS' => http_build_query($data)
-            ));
+            ]);
         $this->setHttpMethod('post');
         return $this->execute();
     }
@@ -272,9 +272,9 @@ class MegaCurl {
      * @return bool
      */
     public function resetAllParams() {
-        $this->info = array();
-        $this->options = array();
-        $this->headers = array();
+        $this->info = [];
+        $this->options = [];
+        $this->headers = [];
         $this->errCode = 0;
         $this->errString = '';
         return true;
