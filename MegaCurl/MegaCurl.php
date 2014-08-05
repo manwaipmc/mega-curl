@@ -206,7 +206,7 @@ class MegaCurl {
     public function execute($autoClose = self::CONNECTION_AUTO_CLOSE)
     {
         // Set default options if not exist
-        if (!isset($this->options[CURLOPT_TIMEOUT])) $this->options[CURLOPT_TIMEOUT] = 60;
+        if (!isset($this->options[CURLOPT_TIMEOUT])) $this->options[CURLOPT_TIMEOUT] = 30;
         if (!isset($this->options[CURLOPT_RETURNTRANSFER])) $this->options[CURLOPT_RETURNTRANSFER] = TRUE;
         if (!isset($this->options[CURLOPT_FAILONERROR])) $this->options[CURLOPT_FAILONERROR] = TRUE;
 
