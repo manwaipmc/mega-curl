@@ -249,7 +249,7 @@ class MegaCurl {
     public function executePost(array $data) {
         $this->setOptions([
                 'POST' => true,
-                'POSTFIELDS' => http_build_query($data)
+                'POSTFIELDS' => $data
             ]);
         $this->setHttpMethod('post');
         return $this->execute();
